@@ -50,18 +50,21 @@ def menu():
 
 def NovoCarro():
     os.system('cls') or None
-    n = input('Digite o nome do carro: ')
-    p = (input('Digite a potencia do carro: '))
+    n = input('Digite o nome do carro.....: ')
+    p = int(input('Digite a potencia do carro: '))
     car = Carro(n, p)
     carros.append(car)
     print("Novo carro adicionado")
     os.system('pause')
-    menu()
 
 
 def informacoes():
     os.system('cls') or None
-    num = input('Informe o numero do carro que deseja ver as informaçoes')
+    cont = 0
+    for c in carros:
+        print('{} - {} - {}'.format(cont, c.nome, c.pot))
+        cont += 1
+    num = input('Informe o numero do carro que deseja ver as informaçoes: ')
     try:
         carros[int(num)].info()
 
@@ -73,7 +76,11 @@ def informacoes():
 
 def ExcluirCarros():
     os.system('cls') or None
-    num = input('Informe o numero do carro que deseja ver as informaçoes')
+    cont = 0
+    for c in carros:
+        print('{} - {} - {}'.format(cont, c.nome, c.pot))
+        cont += 1
+    num = input('Informe o numero do carro que deseja ver as informaçoes: ')
     try:
         del carros[int(num)]
     except Exception as E:
@@ -84,7 +91,11 @@ def ExcluirCarros():
 
 def ligarCarrro():
     os.system('cls') or None
-    num = input('Informe o numero do carro que deseja ver as informaçoes')
+    cont = 0
+    for c in carros:
+        print('{} - {} - {}'.format(cont, c.nome, c.pot))
+        cont += 1
+    num = input('Informe o numero do carro que deseja ver as ligar: ')
     try:
         carros[int(num)].ligar()
         print("Carros Ligado ")
@@ -96,13 +107,17 @@ def ligarCarrro():
 
 def DesligarCarrro():
     os.system('cls') or None
-    num = input('Informe o numero do carro que deseja ver as informaçoes')
+    cont = 0
+    for c in carros:
+        print('{} - {} - {}'.format(cont, c.nome, c.pot))
+        cont += 1
+    num = input('Informe o numero do carro que deseja ver as desliga: ')
     try:
         carros[int(num)].desligar()
         print("Carros Desligado ")
     except Exception as E:
         print(E)
-        print('Carros innexiste na lista')
+        print('Carros inexiste na lista')
     os.system('pause')
 
 
@@ -113,7 +128,7 @@ def ListarCarros():
         print('{} - {}'.format(cont, c.nome))
         cont += 1
     os.system("pause")
-
+ 
 
 retorno = menu()
 
@@ -135,6 +150,8 @@ try:
             break
         else:
             print("Opçao invalida")
+        retorno = menu()
+
 except Exception as E:
     print(E.__class__)
     print(E)
