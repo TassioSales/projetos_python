@@ -6,7 +6,7 @@ jogarNovamente = 's'
 jogadas = 0
 quem_joga = 2
 maxJogadas = 9
-vit = 'n'
+vitoria = 'n'
 
 velha = [
     [" ", " ", " "],
@@ -59,7 +59,100 @@ def cpuJoga():
         jogadas += 1
 
 
-while True:
-    Tela()
-    JogadorJoga()
-    cpuJoga()
+def verificarVitoria():
+    global velha
+    simbolos = ["X", "O"]
+    vitoria = 'n'
+    for s in simbolos:
+        vitoria = "n"
+        ilinha = 0
+        icoluna = 0
+        while ilinha < 3:
+            soma = 0
+            icoluna = 0
+            while icoluna < 3:
+                if velha[ilinha][icoluna] == s:
+                    soma += 1
+                icoluna += 1
+            if soma == 3:
+                vitoria = s
+                break
+            ilinha += 1
+        if vitoria != "n":
+            break
+        # verificar vitoris in colunas
+        ilinha = 0
+        icoluna = 0
+        while icoluna < 3:
+            soma = 0
+            ilinha = 0
+            while ilinha < 3:
+                if velha[ilinha][icoluna] == s:
+                    soma += 1
+                ilinha += 1
+            if soma == 3:
+                vitoria = s
+                break
+            icoluna += 1
+        if vitoria != "n":
+            break
+        # verificar vitoria diagonal
+        soma = 0
+        idiag = 0
+        while idiag < 3:
+            if velha[idiag][idiag] == s:
+                soma += 1
+            idiag += 1
+        if soma == 3:
+            vitoria = s
+            break
+        soma = 0
+        idiagl = 0
+        idiagc = 2
+        while idiagc >= 0:
+            if velha[idiagl][idiagc] == s:
+                soma += 1
+            idiagl += 1
+            idiagc -= 1
+        if soma == 3:
+            vitoria = s
+            break
+    return vitoria
+
+
+def redefinir():
+    global velha
+    global jogadas
+    global quem_joga
+    global maxJogadas
+    global vitoria
+    global jogarNovamente
+    jogarNovamente = 's'
+    jogadas = 0
+    quem_joga = 2
+    maxJogadas = 9
+    vitoria = 'n'
+    velha = [
+        [" ", " ", " "],
+        [" ", " ", " "],
+        [" ", " ", " "]
+    ]
+
+
+if __name__ == '__main__':
+    while jogarNovamente == "s":
+        while True:
+            Tela()
+            JogadorJoga()
+            cpuJoga()
+            Tela()
+            vit = verificarVitoria()
+            if vit != 'n' or jogadas >= maxJogadas:
+                break
+        print(f"{Fore.RED} Fim de jogo {Fore.YELLOW}")
+        if vit == "X" or vit == "o":
+            print(f"Resultado: Jogador {vit} venceu")
+        else:
+            print("Resultado: Empate")
+        jogarNovamente = input(f"{Fore.BLUE} Jogar noavamente [s/n] ?: {Fore.RESET}").lower().strip()[0]
+        redefinir()
