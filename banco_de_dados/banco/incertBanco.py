@@ -41,4 +41,28 @@ while True:
         break
     else:
         print('Valor digitado nao coresponde a [s/n]')
-        pass
+
+
+def deletar(conexao, sql):
+    try:
+        c = conexao.cursor()
+        c.execute(sql)
+        conexao.commit()
+    except Error as ex:
+        print(ex)
+        print(ex.__class__)
+    finally:
+        print("Registro Excluido")
+
+while True:
+    opt = input("Deseja excluir algum client [s/n]: ").lower().strip()[0]
+    try:
+        if opt == 's':
+            num = int(input("Qual registro deseja excluir digite o ID: "))
+            vsql = f"DELETE from tb_contatoS WHERE N_IDCONTATO = {num}"
+            deletar(vcon, vsql)
+        elif opt == "n":
+            break
+    except:
+        print('O valore digitado nao corresponde a [s/n]')
+
