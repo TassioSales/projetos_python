@@ -60,8 +60,34 @@ while True:
     try:
         if opt == 's':
             num = int(input("Qual registro deseja excluir digite o ID: "))
-            vsql = f"DELETE from tb_contatoS WHERE N_IDCONTATO = {num}"
+            vsql = f"DELETE from tb_contatos WHERE N_IDCONTATO = {num}"
             deletar(vcon, vsql)
+        elif opt == "n":
+            break
+    except:
+        print('O valore digitado nao corresponde a [s/n]')
+
+
+def atulizarRegistro(conexao, sql):
+    try:
+        c = conexao.cursor()
+        c.execute(sql)
+        conexao.commit()
+    except Error as ex:
+        print(ex)
+        print(ex.__class__)
+    finally:
+        print("Registro Atualizado")
+
+
+while True:
+    opt = input("Deseja atualizar algum client [s/n]: ").lower().strip()[0]
+    try:
+        if opt == 's':
+            num = int(input("Qual registro deseja atualizar digite o ID: "))
+            nome = input("Digite o nome que deseja colocar: ")
+            vsql = f"""UPDATE tb_contatos SET T_NOMECONTATO = {nome} WHERE N_IDCONTATO = {num}"""
+            atulizarRegistro(vcon, vsql)
         elif opt == "n":
             break
     except:
