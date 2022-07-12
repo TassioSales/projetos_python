@@ -54,15 +54,36 @@ def inserirContato():
     vnome = input("Digite o nome do contato: ")
     vtelefone = input("Digite o telefone do contato: ")
     vemail = input("Digite o email do contato: ")
-    vsql = "INSERT INTO tb_contatos (NOME, TELEFONE, EMAIL) VALUES ('" + vnome + "', '" + vtelefone + "', '" + vemail + "')"
+    vsql = "INSERT INTO tb_contatos (NOME, TELEFONE, EMAIL) VALUES ('" + vnome + "', '" + vtelefone + "', '" + vemail + "') "
     query(vcon, vsql)
 
+
 def deletarContato():
-    pass
+    os.system("cls")
+    vid = input("Digite o ID do contato que deseja deletar: ")
+    vsql = "DELETE FROM tb_contatos WHERE ID = " + vid
+    query(vcon, vsql)
 
 
 def alterarContato():
-    pass
+    vid = input("Digite o ID do contato que deseja alterar: ")
+    resp =consultar(vcon, "SELECT * FROM tb_contatos WHERE ID = " + vid)
+    rnome = resp[0][1]
+    rtelefone = resp[0][2]
+    remail = resp[0][3]
+    vnome = input("Digite o nome do contato: ")
+    vtelefone = input("Digite o telefone do contato: ")
+    vemail = input("Digite o email do contato: ")
+    if len(vnome) == 0:
+        vnome = rnome
+    if len(vtelefone) == 0:
+        vtelefone = rtelefone
+    if len(vemail) == 0:
+        vemail = remail
+    vsql = "UPDATE tb_contatos SET NOME = '" + vnome + "', TELEFONE = '" + vtelefone + "', EMAIL = '" + vemail + "' WHERE ID = " + vid
+    query(vcon, vsql)
+
+
 
 
 def consultarContato():
