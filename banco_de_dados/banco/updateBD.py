@@ -92,3 +92,4 @@ while True:
             break
     except:
         print('O valore digitado nao corresponde a [s/n]')
+''
