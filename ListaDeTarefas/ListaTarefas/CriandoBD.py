@@ -1,14 +1,14 @@
 import sqlite3
 from sqlite3 import Error
+import os
 
-caminho = "C:/Users/tassi//OneDrive - CESB - Centro de Educação Superior de Brasilia " \
-          "LTDA/projetos/Projetos/projetos_python/banco_de_dados/banco/agenda.db "
+caminho = "dados/dados.db"
 
 
-def ConexaoBanco(caminho):
+def ConexaoBanco(cam):
     con = None
     try:
-        con = sqlite3.connect(caminho)
+        con = sqlite3.connect(cam)
     except Error as ex:
         print(ex)
         print(ex.__class__)
@@ -17,14 +17,15 @@ def ConexaoBanco(caminho):
 
 vcon = ConexaoBanco(caminho)
 
-######Criando TB#######
-
-vsql = """CREATE TABLE tb_contatos(
+vsql = """CREATE TABLE agenda(
             N_IDCONTATO INTERGER PRYMARY KEY,
-            T_NOMECONTATO VARCHAR(30),
-            T_TELEFONECONTATO VARCHAR(14),
-            T_EMAILCONTATO VARCHAR(30)
-      );"""
+            NOME VARCHAR(30),
+            SOBRENOME VARCHAR(30),
+            DATA_EVENTO VARCHAR(10),
+            HORA_EVENTO VARCHAR(10),
+            TAREFA VARCHAR(30),
+            DESCRICAO VARCHAR(500)
+        );"""
 
 
 def criarTabela(conexao, sql):
@@ -35,6 +36,8 @@ def criarTabela(conexao, sql):
     except Error as ex:
         print(ex)
         print(ex.__class__)
+
+
 
 
 criarTabela(vcon, vsql)
