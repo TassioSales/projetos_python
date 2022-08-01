@@ -151,6 +151,63 @@ def consultarStatus(opt):
         print("\n")
 
 
+# Removendo dados no banco de dados
+def RemoverTarefa():
+    print("Digite o ID da tarefa: ")
+    vid = input()
+    vsql = "DELETE FROM agenda WHERE N_IDCONTATO = " + vid  # deletando dados do banco de dados
+    query(vcon, vsql)
+    print("Tarefa removida com sucesso!")
+    return 0
+
+
+# Alterando dados no banco de dados
+def AlterarTarefa():
+    vid = input("Digite o ID da tarefa: ")
+    resp = consultar(vcon, "SELECT * FROM agenda WHERE N_IDCONTATO = " + vid)  # consultando dados do banco de dados
+    rnome = resp[0][1]
+    rsobrenome = resp[0][2]
+    rtarefa = resp[0][3]
+    rdata = resp[0][4]
+    rhora = resp[0][5]
+    rlocal = resp[0][6]
+    rtipo = resp[0][7]
+    rdescricao = resp[0][8]
+    rstatus = resp[0][9]
+    rresponsavel = resp[0][10]
+    vnome = input("Digite o nome: ")
+    vsobrenome = input("Digite o sobrenome: ")
+    vtarefa = input("Digite a tarefa: ")
+    vdata = input("Digite a data: ")
+    vhora = input("Digite a hora: ")
+    vlocal = input("Digite o local: ")
+    vtipo = input("Digite o tipo: ")
+    vdescricao = input("Digite a descrição: ")
+    vstatus = input("Digite o status: ")
+    vresponsavel = input("Digite o responsavel: ")
+    if vnome == "":
+        vnome = rnome
+    if vsobrenome == "":
+        vsobrenome = rsobrenome
+    if vtarefa == "":
+        vtarefa = rtarefa
+    if vdata == "":
+        vdata = rdata
+    if vhora == "":
+        vhora = rhora
+    if vlocal == "":
+        vlocal = rlocal
+    if vtipo == "":
+        vtipo = rtipo
+    if vdescricao == "":
+        vdescricao = rdescricao
+    if vstatus == "":
+        vstatus = rstatus
+    if vresponsavel == "":
+        vresponsavel = rresponsavel
+    # alterando dados no banco de dados
+    vsql = "UPDATE agenda SET NOME = '" + vnome + "', SOBRENOME = '" + vsobrenome + "', TAREFA = '" + vtarefa + "', DATA_EVENTO = '" + vdata + "', HORA_EVENTO = '" + vhora + "', LOCAL = '" + vlocal + "', TIPO = '" + vtipo + "', DESCRICAO = '" + vdescricao + "', STATUS = '" + vstatus + "', RESPONSAVEL = '" + vresponsavel + "' WHERE N_IDCONTATO = " + vid
+    query(vcon, vsql)
 
 
 if __name__ == "__main__":
@@ -197,3 +254,10 @@ if __name__ == "__main__":
                 print(f"opção digita foi {opt}")
                 print("Opção inválida!")
                 continue
+        elif opcao == "3":
+            RemoverTarefa()
+        elif opcao == "4":
+            AlterarTarefa()
+        elif opcao == "5":
+            print("Saindo do programa...")
+            break
